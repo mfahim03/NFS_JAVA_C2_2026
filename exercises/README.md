@@ -24,6 +24,26 @@ It shows the output of instructor information to the console which is the instru
 7. What does `student1.printProfile();` do?
 It shows the output of student information to the console such as student id, name, matric number.
 
+## AI-Assisted Task
+
+Use ChatGPT, Gemini, Claude, or Windsurf and ask:
+
+```text
+Explain this Java class to someone who already knows TypeScript or C#.
+```
+
+Then write down:
+
+1. One explanation from AI that helped you.
+
+1.Java, C# and TypeScript all uses private and public method as an access modifier
+2.Java enforces types at compile time.
+3.Java does not have no null safety by default unlike C#
+
+2. One part you still needed the trainer or your own reading to understand.
+
+Object composition and how one object stores references to another. I initially thought `setInstructor()` would immediately print something, but realized it just creates a link between the Course and Instructor objects. The actual printing happens when `printSummary()` is called separately. This shows how objects can be connected and accessed through multiple method calls.
+
 ## Exercise 3
 
 ```text
