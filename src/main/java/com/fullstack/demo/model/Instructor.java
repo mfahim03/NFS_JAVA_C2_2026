@@ -38,6 +38,10 @@ public class Instructor extends Person {
         System.out.println("Expertise: " + expertise);
     }
 
+    public void getProfile() {
+        printProfile();
+    }
+
     private static String requireText(String value, String fieldName) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " is required.");

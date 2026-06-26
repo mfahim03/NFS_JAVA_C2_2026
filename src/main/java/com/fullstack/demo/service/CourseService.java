@@ -7,6 +7,7 @@ import com.fullstack.demo.model.Course;
 import com.fullstack.demo.model.Instructor;
 import com.fullstack.demo.repository.CourseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseService {
@@ -46,12 +47,25 @@ public class CourseService {
 
     public List<Course> searchByTitleUsingLoop(String keyword) {
         String safeKeyword = keyword == null ? "" : keyword.trim().toLowerCase();
-        List<Course> results = new java.util.ArrayList<>();
+        List<Course> results = new ArrayList<>();
 
         for (Course course : courseRepository.findAll()) {
             String title = course.getTitle().toLowerCase();
 
             if (title.contains(safeKeyword)) {
+                results.add(course);
+            }
+        }
+
+        return results;
+    }
+
+    public List<Course> searchByLevelUsingLoop(String level) {
+        String safeLevel = level == null ? "" : level.trim();
+        List<Course> results = new ArrayList<>();
+
+        for (Course course : courseRepository.findAll()) {
+            if (course.getLevel().equalsIgnoreCase(safeLevel)) {
                 results.add(course);
             }
         }

@@ -22,3 +22,10 @@ A MongoDB-backed repository implementation would probably replace it later. That
 ## Why is throwing CourseNotFoundException better than printing inside CourseService?
 
 Throwing CourseNotFoundException is better because the service reports the error without deciding how to display it. A console app, web API, and frontend app may all show the same error differently, so the service should let the caller handle presentation.
+
+### Which version is easier to understand: loop or stream? Why?
+
+The loop version is easier to understand first because it shows each step clearly: create an empty list, check each course, add matching courses, and return the result.
+
+### What does filter() do in a stream?
+`filter()` checks each item in the stream and keeps only the items that match the condition.
