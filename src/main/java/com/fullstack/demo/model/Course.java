@@ -56,17 +56,16 @@ public class Course {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-    // get, set, is methods
 
     public String getSummary() {
         String instructorName = instructor == null ? "Not assigned yet" : instructor.getInstructorName();
-        return "Course ID: " + courseId 
-        + ", Title: " + title 
-        + ", Duration: " + durationHours 
-        + " hours, " 
-        + ", Level: " + level
-        + ", Instructor: " + instructorName;
+        return "Course ID: " + courseId
+                + ", Title: " + title
+                + ", Duration: " + durationHours + " hours"
+                + ", Level: " + level
+                + ", Instructor: " + instructorName;
     }
+
     public void printSummary() {
         System.out.println("Course ID: " + courseId);
         System.out.println("Title: " + title);
@@ -78,6 +77,8 @@ public class Course {
         } else {
             System.out.println("Instructor: " + instructor.getInstructorName());
         }
+
+        System.out.println("----------------------------");
     }
 
     private static String requireText(String value, String fieldName) {

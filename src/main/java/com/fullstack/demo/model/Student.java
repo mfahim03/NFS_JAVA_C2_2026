@@ -32,7 +32,13 @@ public class Student {
     }
 
     public void setEmail(String email) {
-        this.email = requireText(email, "Email");
+        String cleanEmail = requireText(email, "Email");
+
+        if (!cleanEmail.contains("@")) {
+            throw new IllegalArgumentException("Email must contain @.");
+        }
+
+        this.email = cleanEmail;
     }
 
     public void printProfile() {

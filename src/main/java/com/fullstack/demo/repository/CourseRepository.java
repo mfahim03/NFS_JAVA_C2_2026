@@ -1,9 +1,9 @@
 package com.fullstack.demo.repository;
 
+import com.fullstack.demo.model.Course;
+
 import java.util.List;
 import java.util.Optional;
-
-import com.fullstack.demo.model.Course;
 
 public interface CourseRepository {
     Course save(Course course);
