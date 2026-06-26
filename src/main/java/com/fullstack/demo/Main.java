@@ -1,5 +1,9 @@
 package com.fullstack.demo;
 
+import com.fullstack.demo.model.Course;
+import com.fullstack.demo.model.Instructor;
+import com.fullstack.demo.model.Student;
+
 public class Main {
     public static void main(String[] args) {
         // Syntax for creating a new object (instance) of the Course class
@@ -19,8 +23,8 @@ public class Main {
         course2.setInstructor(instructor2);
 
         System.out.println("Instructor Profiles:");
-        instructor1.printProfile();
-        instructor2.printProfile();
+        instructor1.getProfile();
+        instructor2.getProfile();
 
         System.out.println("Course Summaries:");
         course1.printSummary();

@@ -1,30 +1,27 @@
 package com.fullstack.demo.model;
 
-public class Instructor {
-    private String instructorId;
-    private String instructorName;
+public class Instructor extends Person {
     private String expertise;
 
     public Instructor(String instructorId, String instructorName, String expertise) {
-        setInstructorId(instructorId);
-        setInstructorName(instructorName);
+        super(instructorId, instructorName);
         setExpertise(expertise);
     }
 
     public String getInstructorId() {
-        return instructorId;
+        return getId();
     }
 
     public void setInstructorId(String instructorId) {
-        this.instructorId = requireText(instructorId, "Instructor ID");
+        setId(instructorId);
     }
 
     public String getInstructorName() {
-        return instructorName;
+        return getName();
     }
 
     public void setInstructorName(String instructorName) {
-        this.instructorName = requireText(instructorName, "Instructor Name");
+        setName(instructorName);
     }
 
     public String getExpertise() {
@@ -35,9 +32,9 @@ public class Instructor {
         this.expertise = requireText(expertise, "Expertise");
     }
 
-    public void getProfile() {
-        System.out.println("Instructor ID: " + instructorId);
-        System.out.println("Name: " + instructorName);
+    public void printProfile() {
+        System.out.println("Instructor ID: " + getInstructorId());
+        System.out.println("Name: " + getInstructorName());
         System.out.println("Expertise: " + expertise);
     }
 
