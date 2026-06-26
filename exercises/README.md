@@ -11,15 +11,15 @@ When `getCourseById("C004")` is called, which file does the request go to first,
 3. **Third: InMemoryCourseRepository.java** - The `findById()` method searches the LinkedHashMap in memory and returns an Optional containing the course (if found).
 
 
-## Why is InMemoryCourseRepository temporary storage?
+### Why is InMemoryCourseRepository temporary storage?
 
 InMemoryCourseRepository is temporary storage because it keeps course records only in memory while the program runs. When the application stops, all data is lost.
 
-## What would probably replace it later when we use MongoDB?
+### What would probably replace it later when we use MongoDB?
 
 A MongoDB-backed repository implementation would probably replace it later. That implementation would store and retrieve courses from a MongoDB database instead of the in-memory `LinkedHashMap`.
 
-## Why is throwing CourseNotFoundException better than printing inside CourseService?
+### Why is throwing CourseNotFoundException better than printing inside CourseService?
 
 Throwing CourseNotFoundException is better because the service reports the error without deciding how to display it. A console app, web API, and frontend app may all show the same error differently, so the service should let the caller handle presentation.
 
@@ -29,3 +29,9 @@ The loop version is easier to understand first because it shows each step clearl
 
 ### What does filter() do in a stream?
 `filter()` checks each item in the stream and keeps only the items that match the condition.
+
+### How is StudentService similar to CourseService?
+`StudentService` is similar to `CourseService` because both classes use a repository, prevent duplicate IDs, find records by ID, return all records and provide search methods.
+
+### Which file stores students temporarily while the program is running?
+`InMemoryStudentRepository.java` stores students temporarily while the program is running.
