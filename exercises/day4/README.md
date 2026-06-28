@@ -7,3 +7,8 @@ One difference between a Java object and a JavaScript object is that a Java obje
 How is a JavaScript array similar to Java ArrayList?
 ```
 Both a JavaScript array and a Java ArrayList can store multiple values and allow to loop through the items one by one.
+
+```text
+Why are arrow functions important before learning React?
+```
+Arrow functions are important before learning React because React code often uses them for event handlers, callbacks, array methods, and small component helper functions.
