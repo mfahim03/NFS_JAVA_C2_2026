@@ -7,6 +7,7 @@ import com.fullstack.demo.model.Course;
 import com.fullstack.demo.model.Instructor;
 import com.fullstack.demo.repository.CourseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseService {
@@ -27,6 +28,14 @@ public class CourseService {
     }
 
     public Course getCourseById(String courseId) {
+        // public Course getCourseById(String courseId) {
+        //     Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        //     if (optionalCourse.isPresent()) {
+        //         return optionalCourse.get();
+        //     } else {
+        //         throw new CourseNotFoundException(courseId);
+        //     }
+        // }
         return courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException(courseId));
     }
@@ -36,7 +45,14 @@ public class CourseService {
     }
 
     public List<Course> searchByTitle(String keyword) {
-        String safeKeyword = keyword == null ? "" : keyword.trim().toLowerCase();
+        // String safeKeyword;
+
+        // if (keyword == null) {
+        //     safeKeyword = "";
+        // } else {
+        //     safeKeyword = keyword.trim().toLowerCase();
+        // }
+        String safeKeyword = keyword == null ? "" : keyword.toLowerCase();
 
         return courseRepository.findAll()
                 .stream()
@@ -45,13 +61,11 @@ public class CourseService {
     }
 
     public List<Course> searchByTitleUsingLoop(String keyword) {
-        String safeKeyword = keyword == null ? "" : keyword.trim().toLowerCase();
-        List<Course> results = new java.util.ArrayList<>();
+        String safeKeyword = keyword == null ? "" : keyword.toLowerCase();
+        List<Course> results = new ArrayList<>();
 
         for (Course course : courseRepository.findAll()) {
-            String title = course.getTitle().toLowerCase();
-
-            if (title.contains(safeKeyword)) {
+            if (course.getTitle().toLowerCase().contains(safeKeyword)) {
                 results.add(course);
             }
         }
@@ -59,7 +73,20 @@ public class CourseService {
         return results;
     }
 
-    public List<Course> filterByLevel(String level) {
+    public List<Course> searchByLevelUsingLoop(String level) {
+        String safeLevel = level == null ? "" : level.trim();
+        List<Course> results = new ArrayList<>();
+
+        for (Course course : courseRepository.findAll()) {
+            if (course.getLevel().equalsIgnoreCase(safeLevel)) {
+                results.add(course);
+            }
+        }
+
+        return results;
+    }
+
+    public List<Course> searchByLevelUsingStream(String level) {
         String safeLevel = level == null ? "" : level.trim();
 
         return courseRepository.findAll()
@@ -68,8 +95,17 @@ public class CourseService {
                 .toList();
     }
 
+    public List<Course> filterByLevel(String level) {
+        String safeLevel = level == null ? "" : level;
+
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> course.getLevel().equalsIgnoreCase(safeLevel))
+                .toList();
+    }
+
     public List<Course> searchByInstructorName(String instructorName) {
-        String safeInstructorName = instructorName == null ? "" : instructorName.trim().toLowerCase();
+        String safeInstructorName = instructorName == null ? "" : instructorName.toLowerCase();
 
         return courseRepository.findAll()
                 .stream()
@@ -78,7 +114,7 @@ public class CourseService {
                         .getInstructorName()
                         .toLowerCase()
                         .contains(safeInstructorName))
-                .toList();
+                        .toList();
     }
 
     public Course assignInstructor(String courseId, Instructor instructor) {

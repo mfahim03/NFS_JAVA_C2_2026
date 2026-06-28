@@ -35,3 +35,16 @@ The DOM allows JavaScript to read, change, create, and remove HTML elements on a
 How is JavaScript filter used in a search feature?
 ```
 JavaScript `filter` is used in a search feature by checking each item against the search keyword and returning a new array that contains only the matching results.
+
+```text
+1. What does async mean?
+2. What does await do?
+3. What does fetch do?
+4. Why do we use fetch before connecting to a real backend API?
+5. Why should this exercise be run using Live Server?
+```
+1. `async` means a function can contain code that waits for a task to finish, such as loading data.
+2. `await` pauses the async function until the promise finishes and returns its result.
+3. `fetch` requests data from a file or an API.
+4. We use `fetch` before connecting to a real backend API because it teaches the same request and response flow with a simple local JSON file first.
+5. This exercise should be run using Live Server because browsers may block `fetch("students.json")` when the HTML file is opened directly from the file system.
