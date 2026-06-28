@@ -30,3 +30,8 @@ Arrow functions are important before learning React because React code often use
 What does the DOM allow JavaScript to do?
 ```
 The DOM allows JavaScript to read, change, create, and remove HTML elements on a web page while the page is running in the browser.
+
+```text
+How is JavaScript filter used in a search feature?
+```
+JavaScript `filter` is used in a search feature by checking each item against the search keyword and returning a new array that contains only the matching results.
