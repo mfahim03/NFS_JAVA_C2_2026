@@ -25,3 +25,8 @@ Arrow functions are important before learning React because React code often use
 3. `push` returns the new length of the array.
 4. `pop` returns the item removed from the end of the array.
 5. `shift` removes the first item from the array, while `unshift` adds a new item to the beginning of the array.
+
+```text
+What does the DOM allow JavaScript to do?
+```
+The DOM allows JavaScript to read, change, create, and remove HTML elements on a web page while the page is running in the browser.
