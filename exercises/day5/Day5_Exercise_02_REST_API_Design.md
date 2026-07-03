@@ -40,7 +40,12 @@ Your table must include the following columns:
 
 | Resource | Method | Endpoint | Purpose | Request Body Needed? | Success Status | Possible Error Status |
 |---|---|---|---|---|---:|---:|
-|  |  |  |  |  |  |  |
+| events | GET | /events | Retrieve all available events | No | 200 OK | 500 Internal Server Error |
+| event | GET | /events/{eventId} | Retrieve details for one specific event | No | 200 OK | 404 Not Found, 400 Bad Request |
+| booking | POST | /events/{eventId}/bookings | Create a booking for a specific event | Yes | 201 Created | 400 Bad Request, 409 Conflict |
+| bookings | GET | /bookings | Retrieve all bookings | No | 200 OK | 500 Internal Server Error |
+| booking | GET | /bookings/{bookingId} | Retrieve details for one booking | No | 200 OK | 404 Not Found, 400 Bad Request |
+| booking | DELETE | /bookings/{bookingId} | Cancel an existing booking | No | 204 No Content | 404 Not Found, 409 Conflict |
 
 Your API design must cover at least:
 
@@ -77,7 +82,7 @@ Example format:
 
 | Endpoint | Request Body Description |
 |---|---|
-|  |  |
+| /events/{eventId}/bookings | Booking request includes the event ID in the URL, the user or customer identifier, ticket quantity, and any required attendee or contact details. |
 
 ---
 
@@ -96,7 +101,10 @@ Write your error cases in this format:
 
 | Error Case | Related Endpoint | Suitable Status Code | Explanation |
 |---|---|---:|---|
-|  |  |  |  |
+| Event does not exist | /events/{eventId} | 404 Not Found | The requested event ID cannot be found in the system. |
+| Required booking field is missing | /events/{eventId}/bookings | 400 Bad Request | The client failed to provide required booking data such as user ID or ticket quantity. |
+| Event is fully booked | /events/{eventId}/bookings | 409 Conflict | The event has no remaining seats and the booking cannot be created. |
+| Booking is already cancelled or cannot be changed | /bookings/{bookingId} (DELETE) | 409 Conflict | The cancellation request is invalid because the booking is already inactive or cannot be cancelled. |
 
 ---
 
@@ -130,3 +138,13 @@ Before submitting, check that you have:
 - [ ] Included success status codes
 - [ ] Included possible error status codes
 - [ ] Explained at least two error cases
+
+---
+
+## REST principles
+
+The endpoint URLs use nouns to represent resources rather than verbs or actions.
+- `GET /events` and `GET /events/{eventId}` read event resources.
+- `POST /events/{eventId}/bookings` creates a booking resource for a specific event.
+- `GET /bookings` and `GET /bookings/{bookingId}` read booking resources.
+- `DELETE /bookings/{bookingId}` removes (cancels) a booking resource.
