@@ -1,6 +1,29 @@
 const http = require("http");
 
 const PORT = 8081;
+let events = [
+    {
+        id: "EV001",
+        title: "Tech Career Fair",
+        date: "2026-08-10",
+        venue: "Kuala Lumpur Convention Centre",
+        availableSeats: 120
+    },
+    {
+        id: "EV002",
+        title: "Web Development Bootcamp",
+        date: "2026-08-15",
+        venue: "Digital Learning Hub",
+        availableSeats: 35
+    },
+    {
+        id: "EV003",
+        title: "AI for Business Workshop",
+        date: "2026-08-20",
+        venue: "Innovation Centre",
+        availableSeats: 50
+    }
+];
 
 let courseOfferings = [
     {
@@ -128,6 +151,26 @@ const server = http.createServer(async (request, response) => {
     if (method === "OPTIONS") {
         response.writeHead(204, corsHeaders());
         response.end();
+        return;
+    }
+
+    if (method === "GET" && url.pathname === "/api/events") {
+        sendJson(response, 200, events);
+        return;
+    }
+
+    const eventMatch = url.pathname.match(/^\/api\/events\/([^/]+)$/);
+
+    if (method === "GET" && eventMatch) {
+        const id = eventMatch[1];
+        const found = events.find(item => item.id === id);
+
+        if (!found) {
+            sendJson(response, 404, { message: `Event ${id} was not found` });
+            return;
+        }
+
+        sendJson(response, 200, found);
         return;
     }
 
