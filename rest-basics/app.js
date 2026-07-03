@@ -29,35 +29,42 @@ function showStatus(message) {
 function renderCourses(courses) {
     courseList.innerHTML = "";
 
-    courses.forEach(course => {
+    // If the data is an array of events, adapt rendering accordingly
+    courses.forEach(item => {
         const listItem = document.createElement("li");
 
-        listItem.textContent =
-          `${course.courseTitle} by ${course.instructorName} ` +
-          `starts on ${course.startDate}. Capacity: ${course.capacity}. Status: ${course.status}`;
-        
-          courseList.appendChild(listItem);
+        // Support both course-offering shape and event shape
+        if (item.title && item.date) {
+            listItem.textContent = `${item.title} - ${item.date} - ${item.venue} - ${item.availableSeats} seats available`;
+        } else {
+            listItem.textContent =
+              `${item.courseTitle} by ${item.instructorName} ` +
+              `starts on ${item.startDate}. Capacity: ${item.capacity}. Status: ${item.status}`;
+        }
+
+        courseList.appendChild(listItem);
     });
 }
 
 async function loadCourses() {
-    showStatus("Loading courses...");
+    // Load events from the Event API endpoint for the exercise
+    showStatus("Loading events...");
 
     try {
-        const response = await fetch(`${API_BASE_URL}/course-offerings`);
+        const response = await fetch(`${API_BASE_URL}/events`);
 
-        console.log("GET status:", response.status);
+        console.log("GET /events status:", response.status);
 
-        if (!response.ok) { // true for 4xx and 5xx status codes, response.ok is true for 2xx
+        if (!response.ok) {
             throw new Error("Request failed with status " + response.status);
-        } 
+        }
 
         const data = await response.json();
 
         renderCourses(data);
-        showStatus(`Loaded ${data.length} courses.`);
+        showStatus(`Loaded ${data.length} event(s).`);
     } catch (error) {
-        showStatus(error.message);
+        showStatus(`Error: ${error.message}`);
     }
 }
 
@@ -98,5 +105,37 @@ async function createCourse(event) {
     }
 }
 
+// Add a simple search-by-ID UI for the exercise (search events by ID)
+const searchWrapper = document.createElement("div");
+const searchInput = document.createElement("input");
+searchInput.placeholder = "Event ID (e.g. EV001)";
+const searchButton = document.createElement("button");
+searchButton.textContent = "Find Event";
+searchWrapper.appendChild(searchInput);
+searchWrapper.appendChild(searchButton);
+loadButton.parentNode.insertBefore(searchWrapper, statusText);
+
+async function findEventById(id) {
+    if (!id) { showStatus("Enter an event ID to search."); return; }
+    showStatus(`Searching for ${id}...`);
+    try {
+        const res = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(id)}`);
+        console.log(`GET /events/${id} status:`, res.status);
+        if (res.status === 404) {
+            courseList.innerHTML = "";
+            showStatus(`Event ${id} not found.`);
+            return;
+        }
+        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+        const ev = await res.json();
+        renderCourses([ev]);
+        showStatus(`Event ${id} loaded.`);
+    } catch (err) {
+        showStatus(`Error: ${err.message}`);
+    }
+}
+
 loadButton.addEventListener("click", loadCourses);
+searchButton.addEventListener("click", () => findEventById(searchInput.value.trim()));
+searchInput.addEventListener("keydown", (e) => { if (e.key === "Enter") findEventById(searchInput.value.trim()); });
 createForm.addEventListener("submit", createCourse);
