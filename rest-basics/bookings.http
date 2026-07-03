@@ -1,0 +1,58 @@
+### 1. Get all bookings (should return empty array initially)
+GET http://localhost:8081/api/bookings
+
+### 2. Create a valid booking (return 201)
+POST http://localhost:8081/api/bookings
+Content-Type: application/json
+
+{
+  "eventId": "EV001",
+  "participantName": "Rahim Gonzalez",
+  "participantEmail": "rahim@example.com",
+  "seats": 2
+}
+
+### 3. Get the created booking (return 200)
+GET http://localhost:8081/api/bookings/BK001
+
+### 4. Create a booking with missing fields (return 400)
+POST http://localhost:8081/api/bookings
+Content-Type: application/json
+
+{
+  "eventId": "",
+  "participantName": "",
+  "participantEmail": "",
+  "seats": 0
+}
+
+### 5. Create a booking with invalid event ID (return 404)
+POST http://localhost:8081/api/bookings
+Content-Type: application/json
+
+{
+  "eventId": "EV999",
+  "participantName": "Rahim Gonzalez",
+  "participantEmail": "rahim@example.com",
+  "seats": 2
+}
+
+### 6. Create a booking with too many seats (return 400)
+POST http://localhost:8081/api/bookings
+Content-Type: application/json
+
+{
+  "eventId": "EV002",
+  "participantName": "Rahim Gonzalez",
+  "participantEmail": "rahim@example.com",
+  "seats": 100
+}
+
+### 7. Delete a booking (return 200)
+DELETE http://localhost:8081/api/bookings/BK001
+
+### 8. Get the cancelled booking (return status CANCELLED)
+GET http://localhost:8081/api/bookings/BK001
+
+### 9. Verify seat restoration on event EV001 (reflect restored seats)
+GET http://localhost:8081/api/events
