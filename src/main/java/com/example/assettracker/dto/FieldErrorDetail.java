@@ -1,9 +1,8 @@
 package com.example.assettracker.dto;
 
 public class FieldErrorDetail {
-
-    private String field;
-    private String message;
+    public String field;
+    public String message;
 
     public FieldErrorDetail(String field, String message) {
         this.field = field;
@@ -17,4 +16,6 @@ public class FieldErrorDetail {
     public String getMessage() {
         return message;
     }
+
+    
 }

@@ -1,9 +1,7 @@
 package com.example.assettracker.dto;
-
 import java.util.List;
 
 public class ApiErrorResponse {
-
     private String message;
     private List<FieldErrorDetail> errors;
 
@@ -24,4 +22,5 @@ public class ApiErrorResponse {
     public List<FieldErrorDetail> getErrors() {
         return errors;
     }
+    
 }
