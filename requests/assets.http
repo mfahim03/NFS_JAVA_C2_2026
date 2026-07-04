@@ -3,3 +3,6 @@ GET http://localhost:8080/api/health
 
 #### About
 GET http://localhost:8080/api/about
+
+### Tickets
+GET http://localhost:8080/api/tickets

@@ -1,4 +1,4 @@
-package com.example.assettracker.controller;
+package com.example.supportdesk.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,24 +6,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-
-@RestController // Tells Spring this class is a Controller, Handles HTTP requests
+@RestController
 @RequestMapping("/api")
 public class HealthController {
-    @GetMapping("/health")  // maps a GET request to a Java method
+
+    @GetMapping("/health")
     public Map<String, String> health() {
         return Map.of(
             "status", "UP",
-            "service", "asset-tracker-api"
+            "service", "support-desk-api"
         );
     }
 
     @GetMapping("/about")
     public Map<String, String> about() {
         return Map.of(
-            "appName", "Asset Tracker API",
+            "appName", "Support Desk API",
             "version", "1.0.0",
-            "description", "API for managing asset tracking"
+            "description", "API for managing IT support tickets"
         );
     }
 }
