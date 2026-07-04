@@ -1,0 +1,38 @@
+### Health check
+GET http://localhost:8080/api/health
+
+### About check
+GET http://localhost:8080/api/about
+
+### Get all tickets
+GET http://localhost:8080/api/tickets
+
+### Get one existing ticket
+GET http://localhost:8080/api/tickets/T001
+
+### Get missing ticket
+GET http://localhost:8080/api/tickets/T999
+
+### Create a valid ticket
+POST http://localhost:8080/api/tickets
+Content-Type: application/json
+
+{
+  "title": "Cannot access printer",
+  "description": "The office printer is showing paper jam errors even after clearing.",
+  "category": "Hardware",
+  "priority": "HIGH",
+  "createdBy": "ali@example.com"
+}
+
+### Create an invalid ticket
+POST http://localhost:8080/api/tickets
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "",
+  "category": "",
+  "priority": "",
+  "createdBy": ""
+}

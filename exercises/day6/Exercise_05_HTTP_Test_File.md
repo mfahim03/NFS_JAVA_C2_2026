@@ -90,15 +90,15 @@ Send a JSON request body with missing or blank required fields.
 
 For each request, check:
 
-| Test | Expected Status |
-|---|---|
-| Health | 200 |
-| About | 200 |
-| Get all tickets | 200 |
-| Get existing ticket | 200 |
-| Get missing ticket | 404 |
-| Create valid ticket | 201 |
-| Create invalid ticket | 400 |
+| Test | Expected Status | Actual Status
+|---|---|---|
+| Health | 200 | 200 |
+| About | 200 | 200 |
+| Get all tickets | 200 | 200 |
+| Get existing ticket | 200 | 200 |
+| Get missing ticket | 404 | 404 |
+| Create valid ticket | 201 | 201 |
+| Create invalid ticket | 400 | 400 |
 
 ---
 
