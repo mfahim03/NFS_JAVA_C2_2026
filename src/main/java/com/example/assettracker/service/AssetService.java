@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.assettracker.dto.AssetResponse;
+import com.example.assettracker.dto.CreateAssetRequest;
 import com.example.assettracker.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,22 @@ public class AssetService {
                 .filter(asset -> asset.getId().equalsIgnoreCase(id))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Asset " + id + " was not found"));
+    }
+
+    public AssetResponse createAsset(CreateAssetRequest request) {
+        AssetResponse created = new AssetResponse(
+                createNextId(),
+                request.getAssetTag().trim(),
+                request.getName().trim(),
+                request.getCategory().trim(),
+                request.getSerialNumber().trim(),
+                "AVAILABLE",
+                request.getLocation().trim(),
+                null
+        );
+
+        assets.add(created);
+        return created;
     }
 
     private String createNextId() {
