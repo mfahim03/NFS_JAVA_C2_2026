@@ -30,6 +30,13 @@ Answer these questions:
 3. What does MongoDB store as the document ID?
 4. Why should the controller not talk directly to MongoDB?
 
+### Answers
+
+1. The repository handles data access and persistence. It abstracts MongoDB operations so the service can save, query, and retrieve tickets without writing database code directly.
+2. `Ticket` is the internal model stored in MongoDB, while `TicketResponse` is the API response DTO sent back to clients. The DTO separates the JSON contract from the database entity.
+3. MongoDB stores the document ID in the `_id` field. In this app, that ID is mapped to the `id` field of the `Ticket` model.
+4. The controller should not talk directly to MongoDB because it should only handle HTTP request/response logic. Keeping database access in the repository/service layer preserves separation of concerns, makes the app easier to test, and keeps controllers simple.
+
 ---
 
 ## Submission
