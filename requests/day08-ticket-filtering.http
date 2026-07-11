@@ -35,3 +35,21 @@ GET {{baseUrl}}/api/tickets/paged?page=1&size=5
 
 ### Return paged tickets sorted desc by createdAt
 GET {{baseUrl}}/api/tickets/paged?page=0&size=5&sortBy=createdAt&direction=desc
+
+### Invalid status value
+GET {{baseUrl}}/api/tickets?status=INVALID
+
+### Invalid priority value
+GET {{baseUrl}}/api/tickets?priority=URGENT
+
+### Page with no records
+GET {{baseUrl}}/api/tickets/paged?page=99&size=5
+
+### Very large page size
+GET {{baseUrl}}/api/tickets/paged?page=0&size=100
+
+### Unknown sort field
+GET {{baseUrl}}/api/tickets/paged?page=0&size=5&sortBy=unknownField&direction=asc
+
+### Combined filters (status and priority)
+GET {{baseUrl}}/api/tickets?status=OPEN&priority=HIGH
