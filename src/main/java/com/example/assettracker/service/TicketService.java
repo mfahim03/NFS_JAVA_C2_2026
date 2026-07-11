@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class TicketService {
@@ -52,6 +56,12 @@ public class TicketService {
                 LocalDate.now()
         );
         return toResponse(ticketRepository.save(ticket));
+    }
+
+    public Page<TicketResponse> getTicketsPaged(int page, int size, String sortBy, String direction) {
+        Sort.Direction dir = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(dir, sortBy));
+        return ticketRepository.findAll(pageable).map(this::toResponse);
     }
 
     private boolean hasValue(String value) {

@@ -34,6 +34,15 @@ public class TicketController {
         return ticketService.getTickets(status, priority, category);
     }
 
+    @GetMapping("/paged")
+    public org.springframework.data.domain.Page<TicketResponse> getTicketsPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction) {
+        return ticketService.getTicketsPaged(page, size, sortBy, direction);
+    }
+
     @GetMapping("/{id}")
     public TicketResponse getTicketById(@PathVariable String id) {
         return ticketService.getTicketById(id);

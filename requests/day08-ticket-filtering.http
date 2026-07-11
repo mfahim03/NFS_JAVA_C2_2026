@@ -26,3 +26,9 @@ GET {{baseUrl}}/api/tickets?category=Email
 
 ### Return one ticket (replace with an ID returned above)
 GET {{baseUrl}}/api/tickets/REPLACE_WITH_TICKET_ID
+
+### Return paged tickets (page 0, size 5)
+GET {{baseUrl}}/api/tickets/paged?page=0&size=5
+
+### Return paged tickets sorted desc by createdAt
+GET {{baseUrl}}/api/tickets/paged?page=0&size=5&sortBy=createdAt&direction=desc
