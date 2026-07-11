@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:8080
+
+### Create an email ticket
+POST {{baseUrl}}/api/tickets
+Content-Type: application/json
+
+{
+  "title": "Cannot access email",
+  "description": "User cannot log in to the company email account.",
+  "category": "Email",
+  "priority": "HIGH",
+  "createdBy": "amir@example.com"
+}
+
+### Return all tickets
+GET {{baseUrl}}/api/tickets
+
+### Filter tickets by status
+GET {{baseUrl}}/api/tickets?status=OPEN
+
+### Filter tickets by priority
+GET {{baseUrl}}/api/tickets?priority=HIGH
+
+### Filter tickets by category
+GET {{baseUrl}}/api/tickets?category=Email
+
+### Return one ticket (replace with an ID returned above)
+GET {{baseUrl}}/api/tickets/REPLACE_WITH_TICKET_ID
