@@ -1,0 +1,75 @@
+@baseUrl = http://localhost:8080
+
+### 1. Health endpoint is public - should return 200 OK
+GET {{baseUrl}}/api/health
+
+
+### 2. Asset endpoint without token - should return 401 Unauthorized
+GET {{baseUrl}}/api/assets
+
+
+### 3. Register a normal user - should return 201 Created with a token
+# @name registerUser
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Day 9 User",
+  "email": "day09.user@example.com",
+  "password": "User@12345"
+}
+
+
+### 4. Login normal user - should return 200 OK with a token
+# @name loginUser
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "day09.user@example.com",
+  "password": "User@12345"
+}
+
+
+### 5. Asset endpoint with USER token - should return 200 OK
+GET {{baseUrl}}/api/assets
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+
+### 6. Create asset with USER token - should return 403 Forbidden
+POST {{baseUrl}}/api/assets
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "assetTag": "DAY9-USER-0001",
+  "name": "User Test Asset",
+  "category": "Test",
+  "serialNumber": "SN-DAY9-USER-0001",
+  "location": "Training Room"
+}
+
+
+### 7. Login seeded admin - should return 200 OK with a token
+# @name loginAdmin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Admin@12345"
+}
+
+
+### 8. Create asset with ADMIN token - should return 201 Created
+POST {{baseUrl}}/api/assets
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "assetTag": "DAY9-ADMIN-0001",
+  "name": "Admin Test Asset",
+  "category": "Test",
+  "serialNumber": "SN-DAY9-ADMIN-0001",
+  "location": "Training Room"
+}
