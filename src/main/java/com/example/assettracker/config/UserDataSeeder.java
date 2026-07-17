@@ -5,50 +5,40 @@ import com.example.assettracker.repository.AppUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class UserDataSeeder {
+@Component
+public class UserDataSeeder implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDataSeeder.class);
+    private static final String ADMIN_EMAIL = "admin@example.com";
 
-    @Bean
-    CommandLineRunner seedUsers(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
-        return args -> {
-            createUserIfMissing(
-                    appUserRepository,
-                    passwordEncoder,
-                    "Admin User",
-                    "admin@example.com",
-                    "Admin@12345",
-                    "ADMIN"
-            );
-        };
+    private final AppUserRepository appUserRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserDataSeeder(
+            AppUserRepository appUserRepository,
+            PasswordEncoder passwordEncoder) {
+        this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    private void createUserIfMissing(
-            AppUserRepository appUserRepository,
-            PasswordEncoder passwordEncoder,
-            String name,
-            String email,
-            String rawPassword,
-            String role) {
-
-        if (appUserRepository.existsByEmailIgnoreCase(email)) {
-            logger.info("Seed user already exists: {}", email);
+    @Override
+    public void run(String... args) {
+        if (appUserRepository.existsByEmailIgnoreCase(ADMIN_EMAIL)) {
+            logger.info("Skipping admin seed. User already exists: {}", ADMIN_EMAIL);
             return;
         }
 
-        AppUser user = new AppUser(
-                name,
-                email.toLowerCase(),
-                passwordEncoder.encode(rawPassword),
-                role
+        AppUser admin = new AppUser(
+                "Admin User",
+                ADMIN_EMAIL,
+                passwordEncoder.encode("Admin@12345"),
+                "ADMIN"
         );
 
-        appUserRepository.save(user);
-        logger.info("Seeded user email={} role={}", user.getEmail(), user.getRole());
+        appUserRepository.save(admin);
+        logger.info("Seeded admin user: {}", ADMIN_EMAIL);
     }
 }
