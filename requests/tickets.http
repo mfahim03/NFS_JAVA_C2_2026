@@ -1,0 +1,85 @@
+@baseUrl = http://localhost:8080
+
+### 1. Health check - public endpoint (no auth required)
+GET {{baseUrl}}/api/health
+
+
+### 2. Try to access tickets without token - should return 401 Unauthorized
+GET {{baseUrl}}/api/tickets
+
+
+### 3. Register a normal user with USER role
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Normal User",
+  "email": "user@example.com",
+  "password": "User@12345"
+}
+
+
+### 4. Login normal user - copy token from response
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "User@12345"
+}
+
+
+### 5. Get tickets with USER token - should return 200 OK
+### Replace PASTE_USER_TOKEN_HERE with token from login/register response
+GET {{baseUrl}}/api/tickets
+Authorization: Bearer PASTE_USER_TOKEN_HERE
+
+
+### 6. Try to create ticket with USER token - should return 403 Forbidden
+### Replace PASTE_USER_TOKEN_HERE with token from login/register response
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer PASTE_USER_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Test Ticket",
+  "description": "This is a test ticket",
+  "status": "OPEN"
+}
+
+
+### 7. Login seeded admin user - copy token from response
+### Seeded admin credentials: admin@example.com / Admin@12345
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Admin@12345"
+}
+
+
+### 8. Create ticket with ADMIN token - should return 201 Created
+### Replace PASTE_ADMIN_TOKEN_HERE with token from admin login response
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer PASTE_ADMIN_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Admin Created Ticket",
+  "description": "This ticket was created by an admin",
+  "status": "OPEN"
+}
+
+
+### 9. Get tickets with ADMIN token - should return 200 OK
+### Replace PASTE_ADMIN_TOKEN_HERE with token from admin login response
+GET {{baseUrl}}/api/tickets
+Authorization: Bearer PASTE_ADMIN_TOKEN_HERE
+
+
+### 10. Get specific ticket by ID with ADMIN token - should return 200 OK
+### Replace PASTE_ADMIN_TOKEN_HERE with token from admin login response
+### Replace TICKET_ID with actual ticket ID from create response
+GET {{baseUrl}}/api/tickets/TICKET_ID
+Authorization: Bearer PASTE_ADMIN_TOKEN_HERE
