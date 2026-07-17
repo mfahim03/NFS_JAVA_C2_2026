@@ -3,6 +3,7 @@ package com.example.assettracker.exception;
 import com.example.assettracker.dto.ApiErrorResponse;
 import com.example.assettracker.dto.FieldErrorDetail;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,5 +40,17 @@ public class GlobalExceptionHandler {
                 .toList();
 
         return new ApiErrorResponse("Validation failed", errors);
+    }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiErrorResponse handleDuplicateResource(DuplicateResourceException exception) {
+        return new ApiErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiErrorResponse handleAuthenticationException(AuthenticationException exception) {
+        return new ApiErrorResponse("Invalid email or password");
     }
 }
