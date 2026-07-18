@@ -51,3 +51,8 @@ Authorization: Bearer {{token}}
 ## Reflection Question
 
 How could this report help a support manager decide where to assign staff?
+
+The report shows the volume of low-, medium-, and high-priority work at a glance. A
+support manager can assign more staff to urgent queues, match experienced staff to
+high-priority cases, rebalance workloads before queues grow, and keep enough capacity
+available for new critical tickets.

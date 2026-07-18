@@ -1,0 +1,66 @@
+@baseUrl = http://localhost:8080
+
+### Login as the seeded admin (run this first)
+# @name adminLogin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Admin@12345"
+}
+
+### Create a HIGH-priority email ticket
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "title": "Cannot access email",
+  "description": "User cannot log in to the company email account.",
+  "category": "Email",
+  "priority": "HIGH",
+  "createdBy": "amir@example.com"
+}
+
+### Create a MEDIUM-priority hardware ticket
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "title": "Monitor flickers intermittently",
+  "description": "The external monitor flickers several times each hour.",
+  "category": "Hardware",
+  "priority": "MEDIUM",
+  "createdBy": "siti@example.com"
+}
+
+### Create a LOW-priority software ticket
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "title": "Request PDF reader update",
+  "description": "Install the latest approved PDF reader during the next maintenance window.",
+  "category": "Software",
+  "priority": "LOW",
+  "createdBy": "lee@example.com"
+}
+
+### Return all tickets
+GET {{baseUrl}}/api/tickets
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+
+### Filter tickets by priority
+GET {{baseUrl}}/api/tickets?priority=HIGH
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+
+### Day 10 Exercise 2 - group tickets by status
+GET {{baseUrl}}/api/v1/reports/tickets-by-status
+Authorization: Bearer {{adminLogin.response.body.$.token}}
+
+### Day 10 Exercise 3 - group tickets by priority
+GET {{baseUrl}}/api/v1/reports/tickets-by-priority
+Authorization: Bearer {{adminLogin.response.body.$.token}}
