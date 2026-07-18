@@ -64,3 +64,6 @@ Authorization: Bearer {{adminLogin.response.body.$.token}}
 ### Day 10 Exercise 3 - group tickets by priority
 GET {{baseUrl}}/api/v1/reports/tickets-by-priority
 Authorization: Bearer {{adminLogin.response.body.$.token}}
+
+### Day 10 Exercise 4 - public API documentation
+GET {{baseUrl}}/api/docs

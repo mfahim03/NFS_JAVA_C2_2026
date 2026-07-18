@@ -63,3 +63,9 @@ GET http://localhost:8080/api/docs
 ## Reflection Question
 
 Why is API documentation useful before frontend integration?
+
+API documentation gives frontend developers a shared contract before integration
+begins. They can see the available paths, HTTP methods, authentication requirements,
+and endpoint purposes while designing API clients and screens. This reduces incorrect
+assumptions, speeds up testing, and helps backend and frontend teams identify missing
+operations or mismatched expectations early.
