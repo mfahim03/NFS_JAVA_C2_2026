@@ -65,3 +65,9 @@ Add requests to your `.http` file showing that:
 ## Reflection Question
 
 Why might a company keep both `/api/tickets` and `/api/v1/tickets` temporarily?
+
+A company may keep both routes temporarily so existing clients continue working
+while consumers migrate to the versioned API. This provides backward compatibility,
+allows a gradual rollout, and avoids forcing every client to upgrade at once. After
+the migration period, the company can announce a deprecation date and remove the old
+route safely.

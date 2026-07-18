@@ -55,7 +55,7 @@ public class AssetV1Controller {
         return assetService.getAssetById(id);
     }
 
-    // POST /api/assets -> create a new asset. @Valid triggers validation annotations
+    // POST /api/v1/assets -> create a new asset. @Valid triggers validation annotations
     @PostMapping
     public ResponseEntity<AssetResponse> createAsset(@Valid @RequestBody CreateAssetRequest request) {
         AssetResponse created = assetService.createAsset(request);

@@ -23,6 +23,41 @@ Content-Type: application/json
 }
 
 
+### Day 10 Exercise 1 - Versioned API Tests
+
+### 11. Versioned endpoint without a token - should return 401 Unauthorized
+GET {{baseUrl}}/api/v1/assets
+
+
+### 12. Versioned endpoint with a valid USER token - should return 200 OK
+GET {{baseUrl}}/api/v1/assets
+Authorization: Bearer PASTE_USER_TOKEN_HERE
+
+
+### 13. Get one asset from the versioned endpoint - replace the ID first
+GET {{baseUrl}}/api/v1/assets/PASTE_ASSET_ID_HERE
+Authorization: Bearer PASTE_USER_TOKEN_HERE
+
+
+### 14. Create an asset through the versioned endpoint - USER or ADMIN token
+POST {{baseUrl}}/api/v1/assets
+Authorization: Bearer PASTE_USER_OR_ADMIN_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "assetTag": "MON-2026-4001",
+  "name": "Dell UltraSharp Monitor",
+  "category": "Monitor",
+  "serialNumber": "SN-MON-4001",
+  "location": "HQ Level 3"
+}
+
+
+### 15. Old unversioned endpoint remains available - should return 200 OK
+GET {{baseUrl}}/api/assets
+Authorization: Bearer PASTE_USER_TOKEN_HERE
+
+
 ### 4. Login normal user - copy token from response
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
