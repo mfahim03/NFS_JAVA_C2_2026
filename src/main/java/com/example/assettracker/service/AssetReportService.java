@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import com.example.assettracker.dto.ReportCountResponse;
+import com.example.assettracker.model.Asset;
 
 @Service
 public class AssetReportService {
@@ -46,8 +47,8 @@ public class AssetReportService {
         );
 
         AggregationResults<ReportCountResponse> results = mongoTemplate.aggregate(
-                aggregation, 
-                "assets", 
+                aggregation,
+                Asset.class,
                 ReportCountResponse.class
         );
         

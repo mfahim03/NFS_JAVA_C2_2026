@@ -55,7 +55,18 @@ Content-Type: application/json
 
 ### 15. Old unversioned endpoint remains available - should return 200 OK
 GET {{baseUrl}}/api/assets
-Authorization: Bearer PASTE_USER_TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJhc3NldC10cmFja2VyLWFwaSIsIm5hbWUiOiJOb3JtYWwgVXNlciIsImV4cCI6MTc4NDM1OTQ2OSwiaWF0IjoxNzg0MzU1ODY5LCJ1c2VySWQiOiI2YTU5ZDY5MjYzODA3ZGQ3Mjg2NjI2YWEifQ.-8KOTP7ebe8RCB7ihrPrqprVtNPj9RycUriCB095dhc
+
+
+### Day 10 Exercise 2
+
+### 16. Report without a token - should return 401 Unauthorized
+GET {{baseUrl}}/api/v1/reports/assets-by-status
+
+
+### 17. Group assets by status with a valid token - should return 200 OK
+GET {{baseUrl}}/api/v1/reports/assets-by-status
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJhc3NldC10cmFja2VyLWFwaSIsIm5hbWUiOiJOb3JtYWwgVXNlciIsImV4cCI6MTc4NDM1OTQ2OSwiaWF0IjoxNzg0MzU1ODY5LCJ1c2VySWQiOiI2YTU5ZDY5MjYzODA3ZGQ3Mjg2NjI2YWEifQ.-8KOTP7ebe8RCB7ihrPrqprVtNPj9RycUriCB095dhc
 
 
 ### 4. Login normal user - copy token from response
