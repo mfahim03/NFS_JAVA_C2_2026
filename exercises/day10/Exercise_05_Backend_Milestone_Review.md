@@ -15,7 +15,7 @@ Tick each item once completed:
 [/] MongoDB connection works
 [/] Ticket model uses @Document and @Id
 [/] TicketRepository extends MongoRepository
-[ ] Basic CRUD endpoints work
+[/] Basic CRUD endpoints work
 [/] Filtering works
 [/] Pagination works
 [/] Sorting works
