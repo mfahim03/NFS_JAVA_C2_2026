@@ -43,3 +43,5 @@ Submit:
 ## Reflection Question
 
 What is one thing you would improve before connecting this backend to React?
+
+I would add complete update and delete operations for tickets. The current API supports creating and reading tickets, but the frontend will also need to change ticket details or status and remove tickets when appropriate. I would implement secure PUT and DELETE endpoints with validation, role-based access, and clear error responses.
