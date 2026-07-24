@@ -27,7 +27,7 @@ Search by title or category
 Filter by status
 ```
 
-## Teaching hint
+## Hint
 
 Your inputs should be controlled inputs.
 
