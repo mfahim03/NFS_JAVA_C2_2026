@@ -16,7 +16,7 @@ export default function AssetDetails({ asset }) {
                 <StatusBadge status={asset.status} />
             </div>
 
-            <dl classname="details-list">
+            <dl className="details-list">
                 <div>
                     <dt>Category:</dt>
                     <dd>{asset.category}</dd>

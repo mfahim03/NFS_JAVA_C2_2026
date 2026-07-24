@@ -1,7 +1,7 @@
 import StatusBadge from "./StatusBadge";
 import EmptyState from "./EmptyState";
 
-export default function AssetList({ assets }) {
+export default function AssetList({ assets, selectedAssetId, onSelectAsset }) {
     if (assets.length === 0) {
         return <EmptyState message="No assets match the current filter." />
     }

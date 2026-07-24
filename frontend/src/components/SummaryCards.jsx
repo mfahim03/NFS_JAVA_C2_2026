@@ -8,15 +8,15 @@ export default function SummaryCards({ assets }) {
 
     return (
         <section className="summary-grid" aria-label="Asset summary">
-            <SummaryCards label="Total Assets" value={total} />
-            <SummaryCards label="Available" value={available} />
-            <SummaryCards label="Assigned" value={assigned} />
-            <SummaryCards label="Maintenance" value={maintenance} />
+            <SummaryCard label="Total Assets" value={total} />
+            <SummaryCard label="Available" value={available} />
+            <SummaryCard label="Assigned" value={assigned} />
+            <SummaryCard label="Maintenance" value={maintenance} />
         </section>
     );
 }
 
-function SummaryCards({ label, value }) {
+function SummaryCard({ label, value }) {
     return (
         <article className="summary-card">
             <p>{label}</p>
