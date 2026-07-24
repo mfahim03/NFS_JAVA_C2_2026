@@ -2,7 +2,7 @@ import AppHeader from './AppHeader'
 
 function Layout({ children }) {
   return (
-    <div>
+    <div className="app-shell">
       <AppHeader />
       <main>{children}</main>
     </div>
