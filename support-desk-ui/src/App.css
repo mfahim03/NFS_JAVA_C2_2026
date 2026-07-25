@@ -16,7 +16,33 @@
   display: flex;
   gap: 8px;
   padding: 16px 0;
+}
+
+.navigation-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   border-bottom: 1px solid var(--border);
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.account-actions button {
+  padding: 8px 12px;
+  color: #b42318;
+  border: 1px solid #fecdca;
+  border-radius: 9px;
+  background: #fef3f2;
+  cursor: pointer;
+  font-weight: 750;
 }
 
 .app-navigation a {
@@ -640,4 +666,56 @@
   background: #2563eb;
   text-decoration: none;
   font-weight: 700;
+}
+
+.login-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--heading);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.login-form button {
+  padding: 12px 16px;
+  color: #ffffff;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.login-form button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.login-error {
+  margin: 0;
+  padding: 10px 12px;
+  color: #b42318;
+  border: 1px solid #fecdca;
+  border-radius: 9px;
+  background: #fef3f2;
+  font-size: 0.82rem;
 }
