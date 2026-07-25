@@ -6,7 +6,7 @@ export default function ApiInfoCard({ loading, error, apiInfo, apiDocs }) {
     <section className="card api-card">
       <div className="section-heading">
         <h2>Backend Connection</h2>
-        <p>Fetched using useEffect from the public backend endpoints.</p>
+        <p>Fetched using useEffect from the public Day 10 backend endpoints.</p>
       </div>
 
       {loading && <LoadingMessage message="Loading API information..." />}
