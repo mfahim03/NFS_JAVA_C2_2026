@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import '../App.css'
 import ApiInfoCard from '../components/ApiInfoCard'
-import Layout from '../components/Layout'
 import TicketDetail from '../components/TicketDetail'
 import TicketFilterPanel from '../components/TicketFilterPanel'
 import TicketList from '../components/TicketList'
@@ -76,7 +75,7 @@ function TicketsPage() {
   }
 
   return (
-    <Layout>
+    <>
       <section className="dashboard-intro">
         <div>
           <p className="eyebrow">Workspace</p>
@@ -109,7 +108,7 @@ function TicketsPage() {
         />
         <TicketDetail ticket={selectedTicket} />
       </div>
-    </Layout>
+    </>
   )
 }
 

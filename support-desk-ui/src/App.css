@@ -12,6 +12,51 @@
   border-bottom: 1px solid var(--border);
 }
 
+.app-navigation {
+  display: flex;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-navigation a {
+  padding: 10px 14px;
+  color: var(--muted);
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: 750;
+}
+
+.app-navigation a:hover {
+  color: var(--heading);
+  background: var(--subtle);
+}
+
+.app-navigation a.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.app-content {
+  padding-top: 28px;
+}
+
+.page-card {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.page-card h2 {
+  margin: 0;
+}
+
+.page-card > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
 .brand-mark {
   display: grid;
   width: 50px;
@@ -41,7 +86,7 @@
   align-items: end;
   justify-content: space-between;
   gap: 24px;
-  padding: 38px 0 22px;
+  padding: 10px 0 22px;
 }
 
 .dashboard-intro h2,
