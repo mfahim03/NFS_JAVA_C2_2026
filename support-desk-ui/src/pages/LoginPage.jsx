@@ -10,9 +10,13 @@ function LoginPage() {
   const [error, setError] = useState('')
   const location = useLocation()
   const navigate = useNavigate()
+  const previousLocation = location.state?.from
+  const redirectTo = previousLocation
+    ? `${previousLocation.pathname}${previousLocation.search}${previousLocation.hash}`
+    : '/app/dashboard'
 
   if (isAuthenticated) {
-    return <Navigate to="/app/dashboard" replace />
+    return <Navigate to={redirectTo} replace /> //Existing user is already logged in, redirect to the previous page or dashboard.
   }
 
   async function handleSubmit(event) {
@@ -22,9 +26,7 @@ function LoginPage() {
 
     try {
       await login(email, password)
-      navigate(location.state?.from?.pathname || '/app/dashboard', {
-        replace: true,
-      })
+      navigate(redirectTo, { replace: true })
     } catch (loginError) {
       setError(loginError.message)
     } finally {
