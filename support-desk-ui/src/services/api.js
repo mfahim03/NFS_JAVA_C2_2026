@@ -63,6 +63,10 @@ export function getTicket(id, token) {
   return ticketRequest(`/api/v1/tickets/${id}`, token)
 }
 
+export function getTickets(token) {
+  return ticketRequest('/api/v1/tickets', token)
+}
+
 export function createTicket(token, payload) {
   return ticketRequest('/api/v1/tickets', token, {
     method: 'POST',

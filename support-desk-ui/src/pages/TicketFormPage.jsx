@@ -5,18 +5,18 @@ import { useAuth } from '../context/AuthContext'
 import { getTicket } from '../services/api'
 
 function TicketFormPage() {
-  const { id = '' } = useParams()
+  const { ticketId = '' } = useParams()
   const { token } = useAuth()
   const [ticket, setTicket] = useState(null)
-  const [loading, setLoading] = useState(Boolean(id))
+  const [loading, setLoading] = useState(Boolean(ticketId))
   const [loadError, setLoadError] = useState('')
 
   useEffect(() => {
-    if (!id) return
+    if (!ticketId) return
 
     let ignore = false
 
-    getTicket(id, token)
+    getTicket(ticketId, token)
       .then((data) => {
         if (!ignore) setTicket(data)
       })
@@ -30,9 +30,9 @@ function TicketFormPage() {
     return () => {
       ignore = true
     }
-  }, [id, token])
+  }, [ticketId, token])
 
-  const isEditing = Boolean(id)
+  const isEditing = Boolean(ticketId)
 
   return (
     <section className="form-page">
@@ -50,7 +50,7 @@ function TicketFormPage() {
         {!loading && !loadError && (
           <TicketFormWizard
             key={ticket?.id || 'new'}
-            ticketId={id}
+            ticketId={ticketId}
             initialValues={ticket || undefined}
           />
         )}

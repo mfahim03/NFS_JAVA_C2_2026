@@ -555,6 +555,19 @@
   margin-top: 20px;
 }
 
+.edit-ticket-link {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 9px 13px;
+  color: var(--accent);
+  border: 1px solid #b2ccff;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
 .ticket-description {
   margin: 24px 0;
   padding: 18px;

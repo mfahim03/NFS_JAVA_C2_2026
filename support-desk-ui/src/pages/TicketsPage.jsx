@@ -4,11 +4,15 @@ import ApiInfoCard from '../components/ApiInfoCard'
 import TicketDetail from '../components/TicketDetail'
 import TicketFilterPanel from '../components/TicketFilterPanel'
 import TicketList from '../components/TicketList'
-import { sampleTickets } from '../sampleTickets'
-import { fetchApiInfo } from '../services/api'
+import { useAuth } from '../context/AuthContext'
+import { fetchApiInfo, getTickets } from '../services/api'
 
 function TicketsPage() {
-  const [selectedTicketId, setSelectedTicketId] = useState(sampleTickets[0].id)
+  const { token } = useAuth()
+  const [tickets, setTickets] = useState([])
+  const [selectedTicketId, setSelectedTicketId] = useState('')
+  const [ticketsLoading, setTicketsLoading] = useState(true)
+  const [ticketsError, setTicketsError] = useState('')
   const [searchText, setSearchText] = useState('')
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [priorityFilter, setPriorityFilter] = useState('ALL')
@@ -46,10 +50,32 @@ function TicketsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    let ignore = false
+
+    getTickets(token)
+      .then((data) => {
+        if (!ignore) {
+          setTickets(data)
+          setSelectedTicketId((currentId) => currentId || data[0]?.id || '')
+        }
+      })
+      .catch((error) => {
+        if (!ignore) setTicketsError(error.message)
+      })
+      .finally(() => {
+        if (!ignore) setTicketsLoading(false)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [token])
+
   const filteredTickets = useMemo(() => {
     const normalizedSearch = searchText.trim().toLowerCase()
 
-    return sampleTickets.filter((ticket) => {
+    return tickets.filter((ticket) => {
       const matchesSearch =
         normalizedSearch === '' ||
         ticket.title.toLowerCase().includes(normalizedSearch) ||
@@ -61,7 +87,7 @@ function TicketsPage() {
 
       return matchesSearch && matchesStatus && matchesPriority
     })
-  }, [searchText, statusFilter, priorityFilter])
+  }, [tickets, searchText, statusFilter, priorityFilter])
 
   const selectedTicket =
     filteredTickets.find((ticket) => ticket.id === selectedTicketId) ??
@@ -100,14 +126,18 @@ function TicketsPage() {
         onClearFilters={clearFilters}
       />
 
-      <div className="ticket-workspace">
-        <TicketList
-          tickets={filteredTickets}
-          selectedTicketId={selectedTicket?.id}
-          onSelectTicket={(ticket) => setSelectedTicketId(ticket.id)}
-        />
-        <TicketDetail ticket={selectedTicket} />
-      </div>
+      {ticketsLoading && <p className="form-message">Loading tickets...</p>}
+      {ticketsError && <p className="form-message form-error" role="alert">{ticketsError}</p>}
+      {!ticketsLoading && !ticketsError && (
+        <div className="ticket-workspace">
+          <TicketList
+            tickets={filteredTickets}
+            selectedTicketId={selectedTicket?.id}
+            onSelectTicket={(ticket) => setSelectedTicketId(ticket.id)}
+          />
+          <TicketDetail ticket={selectedTicket} />
+        </div>
+      )}
     </>
   )
 }

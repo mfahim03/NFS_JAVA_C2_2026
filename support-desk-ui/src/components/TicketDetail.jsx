@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import PriorityBadge from './PriorityBadge'
 import StatusBadge from './StatusBadge'
 
@@ -24,6 +25,10 @@ function TicketDetail({ ticket }) {
         <PriorityBadge priority={ticket.priority} />
         <StatusBadge status={ticket.status} />
       </div>
+
+      <Link className="edit-ticket-link" to={`/app/tickets/${ticket.id}/edit`}>
+        Edit ticket
+      </Link>
 
       <p className="ticket-description">{ticket.description}</p>
 
