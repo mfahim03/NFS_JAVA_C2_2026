@@ -761,6 +761,20 @@
   box-shadow: 0 0 0 3px var(--focus);
 }
 
+.ticket-form [aria-invalid="true"] {
+  border-color: #d92d20;
+}
+
+.ticket-form [aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.18);
+}
+
+.field-error {
+  color: #b42318;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
 .ticket-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
