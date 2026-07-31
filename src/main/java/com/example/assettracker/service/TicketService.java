@@ -56,7 +56,7 @@ public class TicketService {
                 request.description().trim(),
                 request.category().trim(),
                 request.priority().trim().toUpperCase(),
-                "OPEN",
+                request.status().trim().toUpperCase(),
                 request.createdBy().trim(),
                 LocalDate.now()
         );

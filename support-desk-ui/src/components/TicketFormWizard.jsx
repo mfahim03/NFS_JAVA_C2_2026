@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { createTicket, updateTicket } from '../services/api'
 
 const INITIAL_VALUES = {
   title: '',
@@ -8,9 +10,13 @@ const INITIAL_VALUES = {
   status: 'OPEN',
 }
 
-function TicketFormWizard() {
-  const [values, setValues] = useState(INITIAL_VALUES)
+function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES }) {
+  const { token, user } = useAuth()
+  const [values, setValues] = useState(() => ({ ...INITIAL_VALUES, ...initialValues }))
   const [errors, setErrors] = useState({})
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   function validate(formValues) {
     const nextErrors = {}
@@ -39,13 +45,43 @@ function TicketFormWizard() {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = validate(values)
     setErrors(nextErrors)
+    setSaveError('')
+    setSuccessMessage('')
 
     if (Object.keys(nextErrors).length > 0) {
       return
+    }
+
+    setSaving(true)
+
+    try {
+      const payload = {
+        title: values.title.trim(),
+        description: values.description.trim(),
+        category: values.category.trim(),
+        priority: values.priority,
+        status: values.status,
+      }
+
+      if (ticketId) {
+        await updateTicket(ticketId, token, payload)
+        setSuccessMessage('Ticket updated successfully.')
+      } else {
+        await createTicket(token, {
+          ...payload,
+          createdBy: user?.email || 'support-user',
+        })
+        setSuccessMessage('Ticket created successfully.')
+        setValues(INITIAL_VALUES)
+      }
+    } catch (error) {
+      setSaveError(error.message)
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -138,8 +174,13 @@ function TicketFormWizard() {
         </label>
       </div>
 
-      <button className="primary-action" type="submit">
-        Create ticket
+      {saveError && <p className="form-message form-error" role="alert">{saveError}</p>}
+      {successMessage && (
+        <p className="form-message form-success" role="status">{successMessage}</p>
+      )}
+
+      <button className="primary-action" type="submit" disabled={saving}>
+        {saving ? 'Saving...' : ticketId ? 'Update ticket' : 'Create ticket'}
       </button>
     </form>
   )

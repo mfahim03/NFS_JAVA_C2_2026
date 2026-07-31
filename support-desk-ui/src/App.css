@@ -792,6 +792,32 @@
   font-weight: 800;
 }
 
+.primary-action:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.form-message {
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.form-error {
+  color: #b42318;
+  border-color: #fecdca;
+  background: #fef3f2;
+}
+
+.form-success {
+  color: #067647;
+  border-color: #abefc6;
+  background: #ecfdf3;
+}
+
 @media (max-width: 560px) {
   .ticket-form-row {
     grid-template-columns: 1fr;

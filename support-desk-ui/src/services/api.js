@@ -32,3 +32,47 @@ export async function loginRequest(email, password) {
 
   return response.json()
 }
+
+async function ticketRequest(url, token, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    },
+  })
+
+  if (!response.ok) {
+    let message = 'Could not save the ticket.'
+
+    try {
+      const error = await response.json()
+      message = error.message || message
+    } catch {
+      // Use the fallback when the backend does not return JSON.
+    }
+
+    throw new Error(message)
+  }
+
+  return response.json()
+}
+
+export function getTicket(id, token) {
+  return ticketRequest(`/api/v1/tickets/${id}`, token)
+}
+
+export function createTicket(token, payload) {
+  return ticketRequest('/api/v1/tickets', token, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function updateTicket(id, token, payload) {
+  return ticketRequest(`/api/v1/tickets/${id}`, token, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
