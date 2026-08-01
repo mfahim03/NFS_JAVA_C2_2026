@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useReducer } from 'react'
-import { getPagedTickets } from '../services/api'
+import { getPagedTickets, updateTicket } from '../services/api'
 
 const TicketDataContext = createContext(null)
 
@@ -19,6 +19,21 @@ const initialState = {
   priorityFilter: 'ALL',
   pageCache: {},
   lastLoadSource: '',
+  updatingTicketId: '',
+  updateError: '',
+}
+
+function replaceTicket(tickets, updatedTicket) {
+  return tickets.map((ticket) => (ticket.id === updatedTicket.id ? updatedTicket : ticket))
+}
+
+function replaceCachedTicket(pageCache, updatedTicket) {
+  return Object.fromEntries(
+    Object.entries(pageCache).map(([key, pageData]) => [
+      key,
+      { ...pageData, content: replaceTicket(pageData.content, updatedTicket) },
+    ]),
+  )
 }
 
 function applyPage(state, pageData, lastLoadSource) {
@@ -70,6 +85,29 @@ function ticketDataReducer(state, action) {
       return { ...state, size: action.payload, page: 0 }
     case 'SET_SORT':
       return { ...state, ...action.payload, page: 0 }
+    case 'STATUS_UPDATE_OPTIMISTIC':
+      return {
+        ...state,
+        tickets: replaceTicket(state.tickets, action.payload),
+        pageCache: replaceCachedTicket(state.pageCache, action.payload),
+        updatingTicketId: action.payload.id,
+        updateError: '',
+      }
+    case 'STATUS_UPDATE_SUCCESS':
+      return {
+        ...state,
+        tickets: replaceTicket(state.tickets, action.payload),
+        pageCache: replaceCachedTicket(state.pageCache, action.payload),
+        updatingTicketId: '',
+      }
+    case 'STATUS_UPDATE_ROLLBACK':
+      return {
+        ...state,
+        tickets: replaceTicket(state.tickets, action.payload.ticket),
+        pageCache: replaceCachedTicket(state.pageCache, action.payload.ticket),
+        updatingTicketId: '',
+        updateError: action.payload.message,
+      }
     default:
       return state
   }
@@ -94,7 +132,34 @@ export function TicketDataProvider({ children }) {
     }
   }, [])
 
-  const value = useMemo(() => ({ state, dispatch, loadTickets }), [state, loadTickets])
+  const updateTicketStatus = useCallback(async (token, ticket, status) => {
+    if (ticket.status === status) return
+
+    const backup = { ...ticket }
+    const optimisticTicket = { ...ticket, status }
+    dispatch({ type: 'STATUS_UPDATE_OPTIMISTIC', payload: optimisticTicket })
+
+    try {
+      const updatedTicket = await updateTicket(ticket.id, token, {
+        title: ticket.title,
+        description: ticket.description,
+        category: ticket.category,
+        priority: ticket.priority,
+        status,
+      })
+      dispatch({ type: 'STATUS_UPDATE_SUCCESS', payload: updatedTicket })
+    } catch (error) {
+      dispatch({
+        type: 'STATUS_UPDATE_ROLLBACK',
+        payload: { ticket: backup, message: error.message },
+      })
+    }
+  }, [])
+
+  const value = useMemo(
+    () => ({ state, dispatch, loadTickets, updateTicketStatus }),
+    [state, loadTickets, updateTicketStatus],
+  )
 
   return <TicketDataContext.Provider value={value}>{children}</TicketDataContext.Provider>
 }

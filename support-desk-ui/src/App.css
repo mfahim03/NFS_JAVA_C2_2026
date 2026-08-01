@@ -604,6 +604,41 @@
   margin-top: 20px;
 }
 
+.quick-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.quick-status > span {
+  width: 100%;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quick-status button {
+  padding: 7px 10px;
+  color: var(--accent);
+  border: 1px solid #b2ccff;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.quick-status button:disabled {
+  color: #98a2b3;
+  border-color: var(--border);
+  background: var(--subtle);
+  cursor: not-allowed;
+}
+
 .edit-ticket-link {
   display: inline-flex;
   margin-top: 18px;

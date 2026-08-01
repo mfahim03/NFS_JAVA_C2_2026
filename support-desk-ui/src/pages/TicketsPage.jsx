@@ -10,7 +10,7 @@ import { fetchApiInfo } from '../services/api'
 
 function TicketsPage() {
   const { token } = useAuth()
-  const { state, dispatch, loadTickets } = useTicketData()
+  const { state, dispatch, loadTickets, updateTicketStatus } = useTicketData()
   const { page, size, sortBy, direction } = state
   const cacheKey = `${page}|${size}|${sortBy}|${direction}`
   const cachedPage = state.pageCache[cacheKey]
@@ -131,7 +131,12 @@ function TicketsPage() {
             selectedTicketId={selectedTicket?.id}
             onSelectTicket={(ticket) => dispatch({ type: 'SELECT_TICKET', payload: ticket.id })}
           />
-          <TicketDetail ticket={selectedTicket} />
+          <TicketDetail
+            ticket={selectedTicket}
+            onStatusChange={(status) => updateTicketStatus(token, selectedTicket, status)}
+            isUpdating={state.updatingTicketId === selectedTicket?.id}
+            updateError={state.updateError}
+          />
         </div>
       )}
       {!state.loading && !state.error && (

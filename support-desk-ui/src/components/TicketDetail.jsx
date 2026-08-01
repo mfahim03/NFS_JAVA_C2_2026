@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import PriorityBadge from './PriorityBadge'
 import StatusBadge from './StatusBadge'
 
-function TicketDetail({ ticket }) {
+function TicketDetail({ ticket, onStatusChange, isUpdating, updateError }) {
   if (!ticket) {
     return (
       <section className="panel detail-panel detail-empty">
@@ -25,6 +25,22 @@ function TicketDetail({ ticket }) {
         <PriorityBadge priority={ticket.priority} />
         <StatusBadge status={ticket.status} />
       </div>
+
+      <div className="quick-status" aria-label="Quick ticket status update">
+        <span>Set status</span>
+        {['OPEN', 'IN_PROGRESS', 'CLOSED'].map((status) => (
+          <button
+            key={status}
+            type="button"
+            onClick={() => onStatusChange(status)}
+            disabled={isUpdating || ticket.status === status}
+            aria-pressed={ticket.status === status}
+          >
+            {status.replace('_', ' ')}
+          </button>
+        ))}
+      </div>
+      {updateError && <p className="form-message form-error" role="alert">{updateError}</p>}
 
       <Link className="edit-ticket-link" to={`/app/tickets/${ticket.id}/edit`}>
         Edit ticket
