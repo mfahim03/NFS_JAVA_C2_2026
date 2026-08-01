@@ -300,6 +300,27 @@
   font-weight: 700;
 }
 
+.data-load-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: -8px 0 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.data-load-status button {
+  padding: 8px 12px;
+  color: var(--accent);
+  border: 1px solid #b2ccff;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  cursor: pointer;
+  font-weight: 750;
+}
+
 .pagination-controls button {
   padding: 9px 13px;
   color: var(--accent);

@@ -12,6 +12,8 @@ function TicketsPage() {
   const { token } = useAuth()
   const { state, dispatch, loadTickets } = useTicketData()
   const { page, size, sortBy, direction } = state
+  const cacheKey = `${page}|${size}|${sortBy}|${direction}`
+  const cachedPage = state.pageCache[cacheKey]
   const [apiInfo, setApiInfo] = useState(null)
   const [apiLoading, setApiLoading] = useState(true)
   const [apiError, setApiError] = useState('')
@@ -47,8 +49,12 @@ function TicketsPage() {
   }, [])
 
   useEffect(() => {
-    loadTickets(token, { page, size, sortBy, direction })
-  }, [token, page, size, sortBy, direction, loadTickets])
+    loadTickets(token, { page, size, sortBy, direction }, cachedPage)
+  }, [token, page, size, sortBy, direction, cachedPage, loadTickets])
+
+  function refreshTickets() {
+    loadTickets(token, { page, size, sortBy, direction }, null, true)
+  }
 
   const filteredTickets = useMemo(() => {
     const normalizedSearch = state.searchText.trim().toLowerCase()
@@ -112,6 +118,12 @@ function TicketsPage() {
 
       {state.loading && <p className="form-message">Loading tickets...</p>}
       {state.error && <p className="form-message form-error" role="alert">{state.error}</p>}
+      {!state.loading && !state.error && (
+        <div className="data-load-status">
+          <span aria-live="polite">{state.lastLoadSource}</span>
+          <button type="button" onClick={refreshTickets}>Refresh tickets</button>
+        </div>
+      )}
       {!state.loading && !state.error && (
         <div className="ticket-workspace">
           <TicketList
