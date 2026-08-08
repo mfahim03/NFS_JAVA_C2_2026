@@ -321,6 +321,26 @@
   font-weight: 750;
 }
 
+.ticket-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ticket-summary-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+}
+
+.ticket-summary-card strong {
+  font-size: 1.75rem;
+}
+
 .pagination-controls button {
   padding: 9px 13px;
   color: var(--accent);
@@ -708,6 +728,10 @@
 
   .api-info {
     grid-template-columns: 1fr;
+  }
+
+  .ticket-summary {
+    grid-template-columns: 1fr 1fr;
   }
 
   .filter-panel {

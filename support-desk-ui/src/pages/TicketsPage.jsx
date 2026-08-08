@@ -4,6 +4,7 @@ import ApiInfoCard from '../components/ApiInfoCard'
 import TicketDetail from '../components/TicketDetail'
 import TicketFilterPanel from '../components/TicketFilterPanel'
 import TicketList from '../components/TicketList'
+import TicketSummaryCards from '../components/TicketSummaryCards'
 import { useAuth } from '../context/AuthContext'
 import { useTicketData } from '../context/TicketDataContext'
 import { fetchApiInfo } from '../services/api'
@@ -96,6 +97,8 @@ function TicketsPage() {
         error={apiError}
         apiInfo={apiInfo}
       />
+
+      <TicketSummaryCards tickets={state.tickets} />
 
       <TicketFilterPanel
         searchText={state.searchText}
