@@ -7,6 +7,7 @@ import TicketList from '../components/TicketList'
 import { useAuth } from '../context/AuthContext'
 import { useTicketData } from '../context/TicketDataContext'
 import { fetchApiInfo } from '../services/api'
+import { filterTickets } from '../utils/tickets.js'
 
 function TicketsPage() {
   const { token } = useAuth()
@@ -57,20 +58,16 @@ function TicketsPage() {
   }
 
   const filteredTickets = useMemo(() => {
-    const normalizedSearch = state.searchText.trim().toLowerCase()
+    const searchAndStatusMatches = filterTickets(
+      state.tickets,
+      state.searchText,
+      state.statusFilter,
+    )
 
-    return state.tickets.filter((ticket) => {
-      const matchesSearch =
-        normalizedSearch === '' ||
-        ticket.title.toLowerCase().includes(normalizedSearch) ||
-        ticket.category.toLowerCase().includes(normalizedSearch)
-      const matchesStatus =
-        state.statusFilter === 'ALL' || ticket.status === state.statusFilter
-      const matchesPriority =
-        state.priorityFilter === 'ALL' || ticket.priority === state.priorityFilter
-
-      return matchesSearch && matchesStatus && matchesPriority
-    })
+    return searchAndStatusMatches.filter(
+      (ticket) =>
+        state.priorityFilter === 'ALL' || ticket.priority === state.priorityFilter,
+    )
   }, [state.tickets, state.searchText, state.statusFilter, state.priorityFilter])
 
   const selectedTicket =
