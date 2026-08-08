@@ -10,7 +10,7 @@ const INITIAL_VALUES = {
   status: 'OPEN',
 }
 
-function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES }) {
+function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES, onSubmit }) {
   const { token, user } = useAuth()
   const [values, setValues] = useState(() => ({ ...INITIAL_VALUES, ...initialValues }))
   const [errors, setErrors] = useState({})
@@ -67,7 +67,10 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES }) {
         status: values.status,
       }
 
-      if (ticketId) {
+      if (onSubmit) {
+        await onSubmit(payload)
+        setSuccessMessage(ticketId ? 'Ticket updated successfully.' : 'Ticket created successfully.')
+      } else if (ticketId) {
         await updateTicket(ticketId, token, payload)
         setSuccessMessage('Ticket updated successfully.')
       } else {
@@ -76,8 +79,9 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES }) {
           createdBy: user?.email || 'support-user',
         })
         setSuccessMessage('Ticket created successfully.')
-        setValues(INITIAL_VALUES)
       }
+
+      if (!ticketId) setValues(INITIAL_VALUES)
     } catch (error) {
       setSaveError(error.message)
     } finally {
