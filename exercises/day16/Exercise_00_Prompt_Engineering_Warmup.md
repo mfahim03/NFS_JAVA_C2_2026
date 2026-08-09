@@ -39,8 +39,6 @@ Your better prompt must tell the AI:
 
 Submit both prompts and a short explanation of why the second prompt is safer.
 
----
-
 ### 1) Poor prompt (too vague)
 
 Help me improve the service class that handles tickets. Make it cleaner and faster.
@@ -78,8 +76,6 @@ Risks to mention:
 - Potential behavioral changes related to transaction boundaries, lazy-loading, or exception mapping.
 - Performance regressions if refactoring introduces additional allocations or blocking calls.
 - Concurrency issues if shared mutable state is altered.
-
----
 
 ### Short explanation: why the second prompt is safer
 
