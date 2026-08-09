@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { createTicket, updateTicket } from '../services/api'
+import {
+  normalizeTicketFormPayload,
+  validateTicketFormStep,
+} from '../utils/ticketFormValidation'
 
 const INITIAL_VALUES = {
   title: '',
@@ -18,18 +22,6 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES, onSub
   const [saveError, setSaveError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
-  function validate(formValues) {
-    const nextErrors = {}
-
-    if (!formValues.title.trim()) nextErrors.title = 'Title is required.'
-    if (!formValues.description.trim()) nextErrors.description = 'Description is required.'
-    if (!formValues.category.trim()) nextErrors.category = 'Category is required.'
-    if (!formValues.priority) nextErrors.priority = 'Priority is required.'
-    if (!formValues.status) nextErrors.status = 'Status is required.'
-
-    return nextErrors
-  }
-
   function handleChange(event) {
     const { name, value } = event.target
     const nextValues = { ...values, [name]: value }
@@ -37,7 +29,7 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES, onSub
     setValues(nextValues)
 
     if (errors[name]) {
-      const nextErrors = validate(nextValues)
+      const nextErrors = validateTicketFormStep(nextValues)
       setErrors((currentErrors) => ({
         ...currentErrors,
         [name]: nextErrors[name],
@@ -47,7 +39,7 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES, onSub
 
   async function handleSubmit(event) {
     event.preventDefault()
-    const nextErrors = validate(values)
+    const nextErrors = validateTicketFormStep(values)
     setErrors(nextErrors)
     setSaveError('')
     setSuccessMessage('')
@@ -59,13 +51,7 @@ function TicketFormWizard({ ticketId = '', initialValues = INITIAL_VALUES, onSub
     setSaving(true)
 
     try {
-      const payload = {
-        title: values.title.trim(),
-        description: values.description.trim(),
-        category: values.category.trim(),
-        priority: values.priority,
-        status: values.status,
-      }
+      const payload = normalizeTicketFormPayload(values)
 
       if (onSubmit) {
         await onSubmit(payload)
