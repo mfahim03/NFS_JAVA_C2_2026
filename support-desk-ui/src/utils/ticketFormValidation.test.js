@@ -29,6 +29,24 @@ describe('ticket form validation', () => {
     })
   })
 
+  it('rejects a priority outside the supported choices', () => {
+    const errors = validateTicketFormStep({
+      ...validValues,
+      priority: 'URGENT',
+    })
+
+    expect(errors).toEqual({ priority: 'Priority is invalid.' })
+  })
+
+  it('rejects a status outside the supported workflow', () => {
+    const errors = validateTicketFormStep({
+      ...validValues,
+      status: 'ARCHIVED',
+    })
+
+    expect(errors).toEqual({ status: 'Status is invalid.' })
+  })
+
   it('normalizes text fields without changing selected values', () => {
     expect(normalizeTicketFormPayload({
       ...validValues,
