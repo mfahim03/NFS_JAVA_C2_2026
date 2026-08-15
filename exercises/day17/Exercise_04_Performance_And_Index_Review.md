@@ -23,4 +23,4 @@ Review which fields should be indexed in the Support Desk project.
 
 ## Submission
 
-Submit your index tuning notes.
+The completed review is in [`docs/day17-index-tuning-notes.md`](docs/day17-index-tuning-notes.md). It identifies filter, sort, uniqueness, and reporting fields, plus the command used to inspect MongoDB indexes.
