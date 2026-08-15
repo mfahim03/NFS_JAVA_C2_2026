@@ -1,0 +1,30 @@
+.git
+.gitignore
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+
+# Build and runtime output
+target/
+node_modules/
+dist/
+build/
+*.log
+logs/
+
+# Files unnecessary for the backend image
+frontend/
+support-desk-ui/
+exercises/
+requests/
+*.md
+.idea/
+.vscode/
