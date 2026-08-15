@@ -17,4 +17,4 @@ Collect evidence for:
 
 ## Submission
 
-Submit your completed security evidence file.
+The completed security checks and safe evidence are recorded in [`docs/day17-security-hardening-evidence.md`](docs/day17-security-hardening-evidence.md).
