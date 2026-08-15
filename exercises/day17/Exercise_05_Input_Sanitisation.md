@@ -19,9 +19,9 @@ Do not use sanitisation to hide invalid input. Some input should still be reject
 
 ## Reflection
 
-Answer:
+1. **Validation** checks whether a value satisfies the API's rules before it is accepted, such as a required asset tag or an allowed status.
+2. **Sanitisation** makes harmless, predictable formatting changes to otherwise acceptable input, such as trimming surrounding whitespace.
+3. An asset tag such as `  lap-2026-001  ` can be trimmed and normalised to `LAP-2026-001` before the duplicate check.
+4. A blank asset tag or a name containing markup must be rejected by validation; sanitisation must not turn invalid data into apparently valid data.
 
-1. What is validation?
-2. What is sanitisation?
-3. Give one example where input should be cleaned.
-4. Give one example where input should be rejected.
+`InputSanitizer` now trims text, converts blank input to `null`, removes control characters, collapses internal whitespace, and uses locale-independent uppercasing for code-like fields.

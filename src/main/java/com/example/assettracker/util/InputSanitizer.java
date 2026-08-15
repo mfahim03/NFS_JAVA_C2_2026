@@ -1,4 +1,6 @@
 package com.example.assettracker.util;
+
+import java.util.Locale;
 /*
 Validation: what inputs are allowed and what are not
 
@@ -26,17 +28,16 @@ public class InputSanitizer {
         if (trimmedValue == null) {
             return null;
         }
-        // Remove leading and trailing whitespace
-        
-        return trimmedValue
-            .replaceAll("[^\\p{L}\\p{N}\\s\\-]", "")  // Remove special characters except letters, numbers, spaces, and hyphens
-            .replaceAll("\\{Cntrl\\}", "")  // Remove control characters
-            .replaceAll("\\s+", " ")  // Replace multiple spaces with a single space
-        ;
+        String cleaned = trimmedValue
+                .replaceAll("\\p{Cntrl}", "")
+                .replaceAll("\\s+", " ")
+                .trim();
+
+        return trimToNull(cleaned);
     }
 
     public static String upperCode(String value) {
         String cleaned = cleanText(value);
-        return cleaned == null ? null : cleaned.toUpperCase();
+        return cleaned == null ? null : cleaned.toUpperCase(Locale.ROOT);
     }
 }
