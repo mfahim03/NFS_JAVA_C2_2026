@@ -71,6 +71,7 @@ application-secrets.yml
 .env
 .env.*
 !.env.example
+!exercises/day18/Exercise_05_broken-compose/.env.broken.example
 *.env
 *.pem
 *.key
