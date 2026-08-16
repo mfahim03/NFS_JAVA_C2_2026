@@ -38,6 +38,7 @@ Thumbs.db
 
 # Frontend files are not needed in the backend image
 frontend/
+support-desk-ui/
 node_modules/
 npm-debug.log*
 yarn-debug.log*
